@@ -1,3 +1,4 @@
+import os
 import sqlite3
 from time import strftime, localtime
 from tools.log import logger
@@ -50,7 +51,8 @@ def upsert_book_record(conn, book_id, subject_id, update_success, book_name):
 
 
 def init_sqlite3():
-    # Create a connection to the sqlite database
+    if os.path.isdir("recordsRefreshed.db"):
+        os.rmdir("recordsRefreshed.db")
     conn = sqlite3.connect("recordsRefreshed.db", check_same_thread=False)
     cursor = conn.cursor()
     cursor.execute(

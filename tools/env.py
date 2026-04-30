@@ -36,7 +36,10 @@ class InitEnv:
             # 准备日志目录
             os.makedirs(log_directory, exist_ok=True)
             # 自动创建db文件
-            with sqlite3.connect(os.path.join(PROJECT_ROOT, "recordsRefreshed.db")) as conn:
+            db_path = os.path.join(PROJECT_ROOT, "recordsRefreshed.db")
+            if os.path.isdir(db_path):
+                os.rmdir(db_path)
+            with sqlite3.connect(db_path) as conn:
                 pass
             if not os.path.exists(config_file) or os.path.getsize(config_file) == 0:
                     start_config_generate()
