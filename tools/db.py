@@ -51,9 +51,8 @@ def upsert_book_record(conn, book_id, subject_id, update_success, book_name):
 
 
 def init_sqlite3():
-    if os.path.isdir("recordsRefreshed.db"):
-        os.rmdir("recordsRefreshed.db")
-    conn = sqlite3.connect("recordsRefreshed.db", check_same_thread=False)
+    os.makedirs("database", exist_ok=True)
+    conn = sqlite3.connect(os.path.join("database", "recordsRefreshed.db"), check_same_thread=False)
     cursor = conn.cursor()
     cursor.execute(
         """CREATE TABLE IF NOT EXISTS refreshed_series (series_id text primary key,subject_id text ,update_success BOOLEAN,series_name text,bangumi_name text,refresh_time text )"""
